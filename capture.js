@@ -14,21 +14,20 @@ require([
     'splunkjs/mvc/simplexml/ready!'
 
 ], function($,html2canvas,jspdf){
-        $('#SSS').on("click",function(){
-             function wholePage()
+        $('#download').on("click",function(){
+             function captureAnddownload()
                         {
                                 html2canvas(document.body).then(function(canvas){
-                                                                var img = canvas.toDataURL('image/png');
-                                                                var pdf = new jspdf('p','mm',[300,800]);
-                                                                var width = pdf.internal.pageSize.width;
-                                                                var height = pdf.internal.pageSize.height;
+                                var img = canvas.toDataURL('image/png');
+                                var pdf = new jspdf('p','mm',[document.body.scrollHeight,window.screen.width]);
+                                var width = pdf.internal.pageSize.width;
+                                var height = pdf.internal.pageSize.height;
 
-                                                                pdf.addImage(img, 'png', 0,0,width,height);
-                                                                pdf.save("DashBoard.pdf");
-                                                                });
-                                                        return false;
+                                pdf.addImage(img, 'png', 0,0,width,height);
+                                pdf.save("DashBoard.pdf");
+                                });
+                           return false;
                         }
-                wholePage();
-                alert("DONE!!");
-                        });
+             captureAnddownload();
+            });
 });
